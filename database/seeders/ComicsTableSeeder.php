@@ -15,7 +15,7 @@ class ComicsTableSeeder extends Seeder
      * @return void
      */
     public function run(){
-        $data = require_once('public/comics.php');
+        $data = require_once('database/factories/comics.php');
         foreach($data as $comic) {
             $new_comic = new Comic();
 
