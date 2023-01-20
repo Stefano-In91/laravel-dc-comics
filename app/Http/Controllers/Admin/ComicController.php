@@ -47,18 +47,37 @@ class ComicController extends Controller
       return view('comics.show', compact('comic'));
     }
 
-    public function edit($id)
+    public function edit(Comic $comic)
     {
-        //
+
+      return view('comics.edit', compact('comic'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Comic $comic)
     {
-        //
+      $data = $request->all();
+
+      $comic->title = $data['title'];
+      $comic->description = $data['description'];
+      $comic->price = $data['price'];
+      $comic->series = $data['series'];
+      $comic->sale_date = $data['sale_date'];
+      if(!isNull($data['thumb'])){
+        $comic->thumb = $data['thumb'];
+      }
+      if(!isNull($data['type'])){
+        $comic->type = $data['type'];
+      }
+
+      $comic->save();
+
+      return redirect()->route('comics.show', $comic->id);
     }
 
-    public function destroy($id)
+    public function destroy(Comic $comic)
     {
-        //
+      $comic->delete();
+
+      return redirect()->route('comics.index');
     }
 }
